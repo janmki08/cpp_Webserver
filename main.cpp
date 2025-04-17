@@ -4,21 +4,39 @@
 #include <unistd.h>     // POSIX 시스템 함수
 #include <netinet/in.h> // sockaddr_in, IPPROTO_TCP 등 네트워크 구조체
 #include <thread>
+#include <fstream>
+#include <sstream>
 
 #define PORT 8080
 
 using namespace std;
 
+// 파일 내용 가져오기
+string get_file(const string &path)
+{
+    ifstream file(path); // 파일 열기
+    if (!file.is_open())
+        return ""; // 열기 실패
+
+    stringstream buffer;
+    buffer << file.rdbuf();
+    return buffer.str();
+}
+
 // 쓰레드로 클라이언트 제어
 void handle_client(int csocket)
 {
-    cout << "[스레드 ID: " << std::this_thread::get_id() << "] 클라이언트 처리 중...\n";
     // 요청 받기(read)
     char buffer[30000] = {0};
     int valread = read(csocket, buffer, 30000);
     cout << "받은 요청: " << buffer << "\n";
 
-    // 응답 작성
+    // TODO
+    // 요청 경로 파싱
+    // 파일 경로 구성
+    // 파일 읽기
+
+    // 응답 작성 ========== 수정 필요
     string response =
         "HTTP/1.1 200 OK\r\n"
         "Content-Type: text/plain\r\n"
@@ -27,7 +45,8 @@ void handle_client(int csocket)
         "Hello, World!";
 
     // 응답 보내기
-    write(csocket, response.c_str(), response.length());
+    // write -> send로 수정, 소켓스럽게~~
+    send(csocket, response.c_str(), response.length(), 0);
     cout << "응답 보냄\n";
 
     // 연결 종료
