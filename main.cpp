@@ -12,6 +12,7 @@ using namespace std;
 // 쓰레드로 클라이언트 제어
 void handle_client(int csocket)
 {
+    cout << "[스레드 ID: " << std::this_thread::get_id() << "] 클라이언트 처리 중...\n";
     // 요청 받기(read)
     char buffer[30000] = {0};
     int valread = read(csocket, buffer, 30000);
@@ -70,7 +71,9 @@ int main()
 
         // 새 스레드 생성, 클라이언트 소켓 넘김
         thread client_thread(handle_client, new_socket);
-        client_thread.detach(); // 백그라운드에서 실행하고 소스 리턴
+        client_thread.detach();
+        // detach(): 백그라운드 독립 실행, 대기X, 알아서 끝나게 둠
+        // join(): 메인 스레드가 해당 스레드가 끝날 때까지 기다림, 결과O, 정확한 순서 필요
     }
 
     // 도달은 안 함.
