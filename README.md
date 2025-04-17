@@ -35,7 +35,7 @@ while(1) {
 ![image](https://github.com/user-attachments/assets/ed490d06-5999-4e6b-b488-39ed8a0fa612)
 
 ## 4. 정적 파일 응답
-- 여기서부터 서치가 어려워서 힘들었다.
+- 여기서부터 서치가 어려워서 힘들었다. 다행히 대학 시절 파일 입출력 스트림을 다룬 파트를 참고했다.
 - GPT에게 물어보니 정적 파일 내용을 문자열로 읽어와서 HTML 문자열로 반환하는 함수를 만들라고 한다..
 ```
 ifstream
@@ -48,6 +48,8 @@ stringstream
 ---
 ## 참고 사이트 및 자료
 - 운영체제(이형봉 저)
+- 마이크로프로세서(이형봉 저)
+- 아장아장 C언어(이형봉 저)
 - https://recipes4dev.tistory.com/153 --> 소켓 프로그래밍 이론
 - https://www.it-note.kr/122 --> setsockopt 함수
 - https://gdngy.tistory.com/186 , https://engineerer.tistory.com/126 --> 소켓 구현 참고
