@@ -34,7 +34,7 @@ while(1) {
 ![image](https://github.com/user-attachments/assets/ed490d06-5999-4e6b-b488-39ed8a0fa612)
 
 ## 4. 정적 파일 응답
-- 여기서부터 서치 능력이 낮아서 어려웠다.
+- 여기서부터 서치가 어려워서 힘들었다.
 - GPT에게 물어보니 정적 파일 내용을 문자열로 읽어와서 HTML 문자열로 반환하는 함수를 만들라고 한다..
 ```
 ifstream
