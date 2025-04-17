@@ -31,7 +31,7 @@ while(1) {
        ↳ 클라이언트 연결 수락 → *새 스레드로 요청 처리 함수 실행*
        ↳ 서버는 다시 accept()로 돌아가 다른 요청 기다림
 ```
-![image](https://github.com/user-attachments/assets/3f86eef2-3e9e-499d-867a-d6a78c6869d3)
+![image](https://github.com/user-attachments/assets/ed490d06-5999-4e6b-b488-39ed8a0fa612)
 
 ---
 ## 참고 사이트 및 자료
