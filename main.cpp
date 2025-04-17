@@ -17,7 +17,7 @@ int main()
     int addrlen = sizeof(address); // 구조체 크기(accept 함수에 필요)
 
     // 소켓 생성
-    server_fd = socket(AF_INET, SOCK_STREAM, 0);
+    server_fd = socket(AF_INET, SOCK_STREAM, 0); // IPv4, TCP, 기본 프로토콜
     if (server_fd == 0)
     {
         perror("소켓 연결 실패");
@@ -31,7 +31,7 @@ int main()
     // 주소 바인딩(bind)
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons(PORT);
+    address.sin_port = htons(PORT); // 호스트 바이트 오더 -> 네트웤 바이트 오더(엔디안 변환)
 
     if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0)
     {
@@ -39,7 +39,7 @@ int main()
         exit(EXIT_FAILURE);
     }
 
-    // 요청 대기(listen)
+    // 연결 대기(listen)
     if (listen(server_fd, 3) < 0)
     {
         perror("listen");
@@ -48,33 +48,39 @@ int main()
 
     cout << "리스닝 포트: " << PORT << "...\n";
 
-    // 클라이언트 연결 수락(accept)
-    // 실질적 데이터 송수신 담당
-    if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t *)&addrlen)) < 0)
+    // 루프 형태: 다중 요청 처리
+    while (true)
     {
-        perror("accept");
-        exit(EXIT_FAILURE);
+        // 클라이언트 연결 수락(accept)
+        // 실질적 데이터 송수신 담당
+        if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t *)&addrlen)) < 0)
+        {
+            perror("accept");
+            exit(EXIT_FAILURE);
+        }
+
+        // 요청 받기(read)
+        char buffer[30000] = {0};
+        valread = read(new_socket, buffer, 30000);
+        cout << "받은 요청: " << buffer << "\n";
+
+        // 응답 작성
+        string response =
+            "HTTP/1.1 200 OK\r\n"
+            "Content-Type: text/plain\r\n"
+            "Content-Length: 13\r\n"
+            "\r\n"
+            "Hello, World!";
+
+        // 응답 보내기
+        write(new_socket, response.c_str(), response.length());
+        cout << "응답 보냄\n";
+
+        // 연결 종료
+        close(new_socket);
     }
 
-    // 요청 받기(read)
-    char buffer[30000] = {0};
-    valread = read(new_socket, buffer, 30000);
-    cout << "받은 요청: " << buffer << "\n";
-
-    // 응답 작성
-    string response =
-        "HTTP/1.1 200 OK\r\n"
-        "Content-Type: text/plain\r\n"
-        "Content-Length: 13\r\n"
-        "\r\n"
-        "Hello, World!";
-
-    // 응답 보내기
-    write(new_socket, response.c_str(), response.length());
-    cout << "응답 보냄\n";
-
-    // 연결 종료
-    close(new_socket);
+    // 도달은 안 함.
     close(server_fd);
 
     return 0;
