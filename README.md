@@ -18,3 +18,4 @@ while(1) {
 - https://www.it-note.kr/122 --> setsockopt 함수
 - https://gdngy.tistory.com/186 , https://engineerer.tistory.com/126 --> 소켓 구현 참고
 - https://codingfarm.tistory.com/536 --> bind 함수
+- https://softtone-someday.tistory.com/20 --> Big Endian, Little Endian
