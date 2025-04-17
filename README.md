@@ -3,7 +3,15 @@
 ![image](https://github.com/user-attachments/assets/86528396-70b7-4da1-8f0c-94c0802af4dc)
 
 ## 2. 다중 요청 처리 + 루프
-
+- 흐름
+```
+while(1) {
+  accept;
+  read;
+  write;
+  close;
+}
+```
 ## 참고 사이트 및 자료
 - 운영체제(이형봉 저)
 - https://recipes4dev.tistory.com/153 --> 소켓 프로그래밍 이론
