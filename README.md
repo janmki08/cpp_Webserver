@@ -12,6 +12,7 @@ while(1) {
   close;
 }
 ```
+- 단순히 accept부터 close(new_socket)까지 루프문으로 구현
 ## 참고 사이트 및 자료
 - 운영체제(이형봉 저)
 - https://recipes4dev.tistory.com/153 --> 소켓 프로그래밍 이론
