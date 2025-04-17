@@ -41,3 +41,4 @@ while(1) {
 - https://gdngy.tistory.com/186 , https://engineerer.tistory.com/126 --> 소켓 구현 참고
 - https://codingfarm.tistory.com/536 --> bind 함수
 - https://softtone-someday.tistory.com/20 --> Big Endian, Little Endian
+- https://blockdmask.tistory.com/322 --> 파일 읽기 함수(fstream 라이브러리)
