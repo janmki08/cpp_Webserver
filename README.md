@@ -43,12 +43,13 @@ stringstream
 .rdbuf()
 등을 사용하여 파일 내용을 스트림에 저장하여 string으로 반환
 ```
-
+- 경로 추출 후 html 파일 내용을 읽어와서 나타냄
+- 
 
 ---
 ## 참고 사이트 및 자료
 - 운영체제(이형봉 저)
-- 마이크로프로세서(이형봉 저)
+- 시스템 프로그래밍(이형봉 저)
 - 아장아장 C언어(이형봉 저)
 - https://recipes4dev.tistory.com/153 --> 소켓 프로그래밍 이론
 - https://www.it-note.kr/122 --> setsockopt 함수
