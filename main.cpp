@@ -6,12 +6,15 @@
 #include <thread>
 #include <fstream>
 #include <sstream>
+#include <vector>
+#include <sys/socket.h>
+#include <fcntl.h>
 
 #define PORT 8080
 
 using namespace std;
 
-// 파일 내용 가져오기
+// 파일 내용 반환
 string get_file(const string &path)
 {
     ifstream file(path); // 파일 열기
@@ -28,21 +31,35 @@ void handle_client(int csocket)
 {
     // 요청 받기(read)
     char buffer[30000] = {0};
-    int valread = read(csocket, buffer, 30000);
-    cout << "받은 요청: " << buffer << "\n";
+    read(csocket, buffer, 30000);
+    string request(buffer); // 버퍼 내용 문자열 변환
 
-    // TODO
     // 요청 경로 파싱
-    // 파일 경로 구성
-    // 파일 읽기
+    string path = "/";
+    size_t first_space = request.find(" ");                // 없으면 npos 반환
+    size_t end_space = request.find(" ", first_space + 1); // first_space 다음 위치부터 탐색
 
+    // 경로만 추출
+    if (first_space != string::npos && end_space != string::npos)
+    {
+        path = request.substr(first_space + 1, end_space - first_space);
+    }
+    // 파일 경로 구성
+    if (path == "/") // 경로가 / 일 때
+        path = "/index.html";
+    string file_path = "./static" + path;
+    // 파일 읽기
+    string content = get_file(file_path);
     // 응답 작성 ========== 수정 필요
-    string response =
-        "HTTP/1.1 200 OK\r\n"
-        "Content-Type: text/plain\r\n"
-        "Content-Length: 13\r\n"
-        "\r\n"
-        "Hello, World!";
+    string response;
+    if (!content.empty())
+    {
+        response = "HTTP/1.1 200 OK\r\nContent-Length: " + to_string(content.size()) + "\r\n\r\n" + content;
+    }
+    else
+    {
+        response = "HTTP/1.1 404 NOT FOUND\r\nContent-Length: " + to_string(content.size()) + "\r\n\r\n" + "<h1>404 NOT FOUND</h1>";
+    }
 
     // 응답 보내기
     // write -> send로 수정, 소켓스럽게~~
