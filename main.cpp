@@ -35,6 +35,9 @@ void handle_client(int csocket)
     string request(buffer); // 버퍼 내용 문자열 변환
 
     // 요청 경로 파싱
+    // TODO
+    // 이 부분도 허술함.. 헤더 전체를 읽어봐야할 듯
+    // ex. HTML 메서드, 버전, 호스트, 유저 에이전트, 연결 등~
     string path = "/";
     size_t first_space = request.find(" ");                // 없으면 npos 반환
     size_t end_space = request.find(" ", first_space + 1); // first_space 다음 위치부터 탐색
@@ -44,24 +47,27 @@ void handle_client(int csocket)
     {
         path = request.substr(first_space + 1, end_space - first_space - 1);
     }
-
     // 파일 경로 구성
     if (path == "/")
     {
         path = "/index.html";
     }
+
     string file_path = "./static" + path;
-    // 파일 읽기
     string content = get_file(file_path);
-    // 응답 작성 ----------- 추가 수정 필요
+    // 응답 작성
+    // TODO
+    // Content-Type을 .css나 .js 등등 처리할 수 있게 바꾸기
+    // 여러 보안 처리 ../ 같은 것으로 static 이외 폴더 접근 막기
     string response;
+    string not_found = "<h1>404 NOT FOUND</h1>";
     if (!content.empty())
     {
-        response = "HTTP/1.1 200 OK\r\nContent-Length: " + to_string(content.size()) + "\r\n\r\n" + content;
+        response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: " + to_string(content.size()) + "\r\n\r\n" + content;
     }
     else
     {
-        response = "HTTP/1.1 404 NOT FOUND\r\nContent-Length: " + to_string(content.size()) + "\r\n\r\n" + "<h1>404 NOT FOUND</h1>";
+        response = "HTTP/1.1 404 Not Found\r\nContent-Type: text/html\r\nContent-Length: " + to_string(not_found.size()) + "\r\n\r\n" + not_found;
     }
 
     // 응답 보내기
