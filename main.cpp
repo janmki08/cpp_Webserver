@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 #include <cstring>
-#include <unistd.h>     // POSIX 시스템 함수
-#include <netinet/in.h> // sockaddr_in, IPPROTO_TCP 등 네트워크 구조체
+#include <unistd.h>
+#include <netinet/in.h>
 #include <thread>
 #include <fstream>
 #include <sstream>
@@ -42,16 +42,18 @@ void handle_client(int csocket)
     // 경로만 추출
     if (first_space != string::npos && end_space != string::npos)
     {
-        cout << "디버그" << endl;
-        path = request.substr(first_space + 1, end_space - first_space);
+        path = request.substr(first_space + 1, end_space - first_space - 1);
     }
+
     // 파일 경로 구성
-    if (path == "/") // 경로가 / 일 때
+    if (path == "/")
+    {
         path = "/index.html";
+    }
     string file_path = "./static" + path;
     // 파일 읽기
     string content = get_file(file_path);
-    // 응답 작성 ========== 수정 필요
+    // 응답 작성 ----------- 추가 수정 필요
     string response;
     if (!content.empty())
     {
@@ -63,7 +65,6 @@ void handle_client(int csocket)
     }
 
     // 응답 보내기
-    // write -> send로 수정, 소켓스럽게~~
     send(csocket, response.c_str(), response.length(), 0);
     cout << "응답 보냄\n";
 
@@ -73,10 +74,10 @@ void handle_client(int csocket)
 
 int main()
 {
-    int server_fd;                 // 연결 기다리는 소켓(listen), 파일 디스크립터
-    int new_socket;                // 연결 시 생성 소켓(accept)
-    struct sockaddr_in address;    // 바인딩될 주소 정보 구조체
-    int addrlen = sizeof(address); // 구조체 크기(accept 함수에 필요)
+    int server_fd;
+    int new_socket;
+    struct sockaddr_in address;
+    int addrlen = sizeof(address);
 
     // 소켓 생성
     server_fd = socket(AF_INET, SOCK_STREAM, 0); // IPv4, TCP(UDP는 SOCK_DGRAM), 기본 프로토콜
@@ -91,9 +92,9 @@ int main()
     address.sin_port = htons(PORT); // 호스트 바이트 오더 -> 네트웤 바이트 오더(엔디안 변환)
 
     bind(server_fd, (struct sockaddr *)&address, sizeof(address));
-    listen(server_fd, 10); // 백로그 큐(동시 접속 대기열) 10개, SOMAXCONN은 4096임.
+    listen(server_fd, 10); // 백로그 큐(동시 접속 대기열), SOMAXCONN은 4096임(안전)
 
-    cout << "다중 스레드 서버 포트: " << PORT << "...\n";
+    cout << "포트: " << PORT << "...\n";
 
     // 루프 형태: 다중 요청 처리
     while (true)
@@ -109,8 +110,6 @@ int main()
         // 새 스레드 생성, 클라이언트 소켓 넘김
         thread client_thread(handle_client, new_socket);
         client_thread.detach();
-        // detach(): 백그라운드 독립 실행, 대기X, 알아서 끝나게 둠
-        // join(): 메인 스레드가 해당 스레드가 끝날 때까지 기다림, 결과O, 정확한 순서 필요
     }
 
     // 도달은 안 함.
