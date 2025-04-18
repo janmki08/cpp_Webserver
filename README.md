@@ -45,10 +45,21 @@ stringstream
 ```
 - 경로 추출 후 html 파일 내용을 읽어와서 나타냄(오류 발생으로 수정 중)
 > 해결: 경로 추출 시 -1을 안해서 공백이 함께 입력됨... 기초적인 실수인데 안보여서 한참 찾음..
+
 ![image](https://github.com/user-attachments/assets/7a795dbf-d7c2-40d0-84a7-309d27ded742)
 ![image](https://github.com/user-attachments/assets/6f0849e7-ee6c-4ea2-8abb-88474b1da3ff)
-- 이미지와 같이 깨진 폰트로 나옴(아마 UTF-8 때문인 것을 추측)
 
+- 이미지와 같이 깨진 폰트로 나옴(아마 UTF-8 때문인 것을 추측)
+> 해결: <meta charset= "UTF-8"> 추가
+
+![image](https://github.com/user-attachments/assets/fca7b160-8d68-449b-a409-a17b82da5f1e)
+![image](https://github.com/user-attachments/assets/73d7dd1b-b810-48b8-abf7-599b37435b4c)
+
+## 5. TODO
+1. 현재 요청(request)를 공백 문자로만 구분해서 파싱함 -> 쿼리도 있고 잘못된 요청이 왔을 때 구분 못하기 때문
+2. MIME 타입 응답 수정 -> 현재는 단순해서 부정확한 정보를 담고 있고 확장자를 매핑해서 기능 확장 필요
+3. 보안 -> static 이외 폴더 접근 막기
+4. 
 ---
 ## 참고 사이트 및 자료
 - 운영체제(이형봉 저)
