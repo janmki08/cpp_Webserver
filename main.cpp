@@ -42,6 +42,7 @@ void handle_client(int csocket)
     // 경로만 추출
     if (first_space != string::npos && end_space != string::npos)
     {
+        cout << "디버그" << endl;
         path = request.substr(first_space + 1, end_space - first_space);
     }
     // 파일 경로 구성
