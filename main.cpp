@@ -37,6 +37,7 @@ void handle_client(int csocket)
     // 요청 경로 파싱
     // TODO
     // 이 부분도 허술함.. 헤더 전체를 읽어봐야할 듯
+    // MIME 타입 구분
     // ex. HTML 메서드, 버전, 호스트, 유저 에이전트, 연결 등~
     string path = "/";
     size_t first_space = request.find(" ");                // 없으면 npos 반환
@@ -57,7 +58,6 @@ void handle_client(int csocket)
     string content = get_file(file_path);
     // 응답 작성
     // TODO
-    // Content-Type을 .css나 .js 등등 처리할 수 있게 바꾸기
     // 여러 보안 처리 ../ 같은 것으로 static 이외 폴더 접근 막기
     string response;
     string not_found = "<h1>404 NOT FOUND</h1>";
