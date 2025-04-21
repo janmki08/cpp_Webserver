@@ -62,6 +62,8 @@ stringstream
 ![image](https://github.com/user-attachments/assets/29056998-64bb-4b52-9ad4-195132e62694)
 ![image](https://github.com/user-attachments/assets/c9d112b0-a6b6-47ef-b995-3f053994d67d)
 
+> C++17을 적용 안했었다 -> 설정 변경함
+
 ## TODO
 1. 현재 요청(request)를 공백 문자로만 구분해서 파싱함 -> 쿼리도 있고 잘못된 요청이 왔을 때 구분 못하기 때문
 2. MIME 타입 응답 수정 -> 현재는 단순해서 부정확한 정보를 담고 있고 확장자를 매핑해서 기능 확장 필요
