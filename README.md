@@ -55,7 +55,11 @@ stringstream
 ![image](https://github.com/user-attachments/assets/fca7b160-8d68-449b-a409-a17b82da5f1e)
 ![image](https://github.com/user-attachments/assets/73d7dd1b-b810-48b8-abf7-599b37435b4c)
 
-## 5. TODO
+## GET 요청의 쿼리 분리, 파싱
+1. "?"문자 뒤의 쿼리(키-값)를 분리
+2. map함수로 키-값 쌍을 매핑
+
+## TODO
 1. 현재 요청(request)를 공백 문자로만 구분해서 파싱함 -> 쿼리도 있고 잘못된 요청이 왔을 때 구분 못하기 때문
 2. MIME 타입 응답 수정 -> 현재는 단순해서 부정확한 정보를 담고 있고 확장자를 매핑해서 기능 확장 필요
 3. 보안 -> static 이외 폴더 접근 막기
