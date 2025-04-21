@@ -9,6 +9,7 @@
 #include <vector>
 #include <sys/socket.h>
 #include <fcntl.h>
+#include <map>
 
 #define PORT 8080
 
@@ -35,9 +36,6 @@ void handle_client(int csocket)
     string request(buffer); // 버퍼 내용 문자열 변환
 
     // 요청 경로 파싱
-    // MIME 타입 구분
-    // ex. HTML 메서드, 버전, 호스트, 유저 에이전트, 연결 등~
-
     // request 라인 추출
     istringstream request_stream(request);
     string request_line;
@@ -60,10 +58,24 @@ void handle_client(int csocket)
 
     cout << "쿼리: " << query << endl;
 
-    /*
-        TODO
-        쿼리 파싱
-    */
+    // map 쿼리 파싱
+    // ?fname=sanghoon&lname=Park --> &, =
+    map<string, string> query_parse;
+    if (!query.empty())
+    {
+        istringstream query_stream(query);
+        string pair;
+        while (getline(query_stream, pair, '&'))
+        {
+            size_t equal_pos = pair.find('=');
+            if (equal_pos != string::npos)
+            {
+                string key = pair.substr(0, equal_pos);
+                string value = pair.substr(equal_pos + 1);
+                query_parse[key] = value;
+            }
+        }
+    }
 
     // 경로
     if (path == "/")
@@ -72,9 +84,21 @@ void handle_client(int csocket)
 
     cout << method << path << version << endl;
 
-    // TODO
-    // 여러 보안 처리 ../ 같은 것으로 static 이외 폴더 접근 막기
+    // 내용 가져오기
     string content = get_file(file_path);
+
+    /* 쿼리문 테스트용
+    if (path == "/query.html")
+    {
+        content = "<!DOCTYPE html><html><head><meta charset =\"UTF-8\"><title>쿼리!!!!!!!</title></head><body>";
+        content += "<h1>쿼리</h1>";
+        for (const auto &[key, value] : query_parse)
+        {
+            content += "<p>" + key + ": " + value + "</p>";
+        }
+        content += "</body></html>";
+    }
+    */
 
     // 응답
     string response;
