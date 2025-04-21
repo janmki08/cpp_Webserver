@@ -35,8 +35,6 @@ void handle_client(int csocket)
     string request(buffer); // 버퍼 내용 문자열 변환
 
     // 요청 경로 파싱
-    // TODO
-    // 이 부분도 허술함.. 헤더 전체를 읽어봐야할 듯
     // MIME 타입 구분
     // ex. HTML 메서드, 버전, 호스트, 유저 에이전트, 연결 등~
 
@@ -55,10 +53,10 @@ void handle_client(int csocket)
 
     cout << method << uri << version << endl;
 
-    string content = get_file(file_path);
     // 응답 작성
     // TODO
     // 여러 보안 처리 ../ 같은 것으로 static 이외 폴더 접근 막기
+    string content = get_file(file_path);
     string response;
     string not_found = "<h1>404 NOT FOUND</h1>";
     if (!content.empty())
