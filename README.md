@@ -2,6 +2,13 @@
 - VSCode
 - C++17
 - WSL Ubuntu-20.04
+
+```
+빌드 및 실행
+cd cpp_webserver
+make
+./server
+```
 ---
 ## 1. 일회용 웹브라우저 띄우기
 ![image](https://github.com/user-attachments/assets/4aac2eaf-a39e-4871-bc91-84aed8bde3ae)
