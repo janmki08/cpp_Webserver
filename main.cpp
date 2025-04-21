@@ -39,22 +39,22 @@ void handle_client(int csocket)
     // 이 부분도 허술함.. 헤더 전체를 읽어봐야할 듯
     // MIME 타입 구분
     // ex. HTML 메서드, 버전, 호스트, 유저 에이전트, 연결 등~
-    string path = "/";
-    size_t first_space = request.find(" ");                // 없으면 npos 반환
-    size_t end_space = request.find(" ", first_space + 1); // first_space 다음 위치부터 탐색
 
-    // 경로만 추출
-    if (first_space != string::npos && end_space != string::npos)
-    {
-        path = request.substr(first_space + 1, end_space - first_space - 1);
-    }
-    // 파일 경로 구성
-    if (path == "/")
-    {
-        path = "/index.html";
-    }
+    istringstream request_stream(request);
+    string request_line;
+    getline(request_stream, request_line); // 첫 줄 가져오기
 
-    string file_path = "./static" + path;
+    istringstream line_stream(request);
+    string method, uri, version;
+    line_stream >> method >> uri >> version;
+
+    // 경로
+    if (uri == "/")
+        uri = "/index.html";
+    string file_path = "./static" + uri;
+
+    cout << method << uri << version << endl;
+
     string content = get_file(file_path);
     // 응답 작성
     // TODO
