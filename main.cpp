@@ -38,34 +38,53 @@ void handle_client(int csocket)
     // MIME 타입 구분
     // ex. HTML 메서드, 버전, 호스트, 유저 에이전트, 연결 등~
 
+    // request 라인 추출
     istringstream request_stream(request);
     string request_line;
-    getline(request_stream, request_line); // 첫 줄 가져오기
+    getline(request_stream, request_line);
 
+    // request 라인 파싱(메서드, URI, version)
     istringstream line_stream(request);
     string method, uri, version;
     line_stream >> method >> uri >> version;
 
+    // path와 query 분리
+    string path = uri;
+    string query = "";
+    size_t query_pos = uri.find('?');
+    if (query_pos != string::npos)
+    {
+        path = uri.substr(0, query_pos);
+        query = uri.substr(query_pos + 1);
+    }
+
+    cout << "쿼리: " << query << endl;
+
+    /*
+        TODO
+        쿼리 파싱
+    */
+
     // 경로
-    if (uri == "/")
-        uri = "/index.html";
-    string file_path = "./static" + uri;
+    if (path == "/")
+        path = "/index.html";
+    string file_path = "./static" + path;
 
-    cout << method << uri << version << endl;
+    cout << method << path << version << endl;
 
-    // 응답 작성
     // TODO
     // 여러 보안 처리 ../ 같은 것으로 static 이외 폴더 접근 막기
     string content = get_file(file_path);
+
+    // 응답
     string response;
-    string not_found = "<h1>404 NOT FOUND</h1>";
     if (!content.empty())
     {
         response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: " + to_string(content.size()) + "\r\n\r\n" + content;
     }
     else
     {
-        response = "HTTP/1.1 404 Not Found\r\nContent-Type: text/html\r\nContent-Length: " + to_string(not_found.size()) + "\r\n\r\n" + not_found;
+        response = "HTTP/1.1 404 NOT FOUND\r\nContent-Length: 0\r\n\r\n<h1>404 NOT FOUND</h1>";
     }
 
     // 응답 보내기
