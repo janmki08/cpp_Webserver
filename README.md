@@ -62,7 +62,7 @@ stringstream
 ![image](https://github.com/user-attachments/assets/fca7b160-8d68-449b-a409-a17b82da5f1e)
 ![image](https://github.com/user-attachments/assets/73d7dd1b-b810-48b8-abf7-599b37435b4c)
 
-## GET 요청의 쿼리 분리, 파싱
+### 요청의 쿼리 분리, 파싱
 1. "?"문자 뒤의 쿼리(키-값)를 분리
 2. map함수로 키-값 쌍을 매핑
 
@@ -70,6 +70,17 @@ stringstream
 ![image](https://github.com/user-attachments/assets/c9d112b0-a6b6-47ef-b995-3f053994d67d)
 
 > 경고 처리 및 Makefile로 관리
+
+### POST 요청 처리
+![image](https://github.com/user-attachments/assets/0592adb2-99e9-4794-b99b-8cf3b89a6d86)
+- 헤더 끝 부분 뒤에 "\r\n\r\n"로 body 부분과 분리
+- Content-Length만큼 body를 읽음
+![image](https://github.com/user-attachments/assets/9e6711e0-ed25-41b5-9542-4f834e842576)
+
+- 박상훈과 나이를 전송하니 보내진 것을 확인
+- 다만, 아래처럼 데이터가 인코딩 되어 보인다. 디코딩도 해봐야한다.
+![image](https://github.com/user-attachments/assets/e079d111-e3fc-451b-bb5b-832aa9599631)
+
 
 ## TODO
 1. ~~현재 요청(request)를 공백 문자로만 구분해서 파싱함 -> 쿼리도 있고 잘못된 요청이 왔을 때 구분 못하기 때문~~
