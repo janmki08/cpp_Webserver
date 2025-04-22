@@ -84,6 +84,31 @@ void handle_client(int csocket)
 
     cout << method << " " << path << " " << version << endl;
 
+    // POST 요청 처리
+    string body;
+    if (method == "POST")
+    {
+        size_t header_end = request.find("\r\n\r\n");
+        if (header_end != string::npos)
+        {
+            body = request.substr(header_end + 4);
+        }
+
+        // 쿼리문과 동일
+        istringstream body_stream(body);
+        string pair;
+        while (getline(body_stream, pair, '&'))
+        {
+            size_t equal_pos = pair.find('=');
+            if (equal_pos != string::npos)
+            {
+                string key = pair.substr(0, equal_pos);
+                string value = pair.substr(equal_pos + 1);
+                query_parse[key] = value;
+            }
+        }
+    }
+
     // 내용 가져오기
     string content = get_file(file_path);
 
@@ -99,6 +124,18 @@ void handle_client(int csocket)
         content += "</body></html>";
     }
     */
+
+    // POST 테스트용
+    if (path == "/post.html" && method == "POST")
+    {
+        content = "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>POST 처리</title></head><body>";
+        content += "<h1>POST 데이터</h1>";
+        for (const auto &[key, value] : query_parse)
+        {
+            content += "<p>" + key + ": " + value + "</p>";
+        }
+        content += "</body></html>";
+    }
 
     // 응답
     string response;
