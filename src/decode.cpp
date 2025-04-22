@@ -1,7 +1,9 @@
+#include "decode.h"
 #include <sstream>
 
 using namespace std;
 
+// HTML FORM 인코딩 된 것을 디코딩
 string decode(const string &str)
 {
     string decode;

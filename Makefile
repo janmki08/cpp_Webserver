@@ -1,14 +1,16 @@
 # Makefile
 
 CXX = g++
-CXXFLAGS = -std=c++17 -pthread -Wall
-TARGET = server
-SRC = main.cpp
+CXXFLAGS = -std=c++17 -Wall -pthread
+INCLUDES = -Iinclude
+SRCS = main.cpp src/decode.cpp src/getfile.cpp src/handler.cpp src/request_parser.cpp src/response.cpp
+OBJS = $(SRCS:.cpp=.o)
+TARGET = build/server
 
 all: $(TARGET)
 
-$(TARGET): $(SRC)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SRC)
+$(TARGET): $(SRCS)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $@ $(SRCS)
 
 clean:
-	rm -f $(TARGET)
+	rm -f $(TARGET) $(OBJS)
