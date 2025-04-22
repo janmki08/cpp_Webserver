@@ -82,7 +82,7 @@ void handle_client(int csocket)
         path = "/index.html";
     string file_path = "./static" + path;
 
-    cout << method << path << version << endl;
+    cout << method << " " << path << " " << version << endl;
 
     // 내용 가져오기
     string content = get_file(file_path);
@@ -105,6 +105,7 @@ void handle_client(int csocket)
     if (!content.empty())
     {
         response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: " + to_string(content.size()) + "\r\n\r\n" + content;
+        cout << response << endl;
     }
     else
     {
