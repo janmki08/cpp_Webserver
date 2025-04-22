@@ -6,10 +6,9 @@
 #include <thread>
 #include <fstream>
 #include <sstream>
-#include <vector>
 #include <sys/socket.h>
-#include <fcntl.h>
 #include <map>
+#include "decode.h"
 
 #define PORT 8080
 
@@ -102,8 +101,9 @@ void handle_client(int csocket)
             size_t equal_pos = pair.find('=');
             if (equal_pos != string::npos)
             {
-                string key = pair.substr(0, equal_pos);
-                string value = pair.substr(equal_pos + 1);
+                // 디코딩 처리 추가
+                string key = decode(pair.substr(0, equal_pos));
+                string value = decode(pair.substr(equal_pos + 1));
                 query_parse[key] = value;
             }
         }
@@ -142,7 +142,7 @@ void handle_client(int csocket)
     if (!content.empty())
     {
         response = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: " + to_string(content.size()) + "\r\n\r\n" + content;
-        cout << response << endl;
+        // cout << response << endl;
     }
     else
     {
