@@ -84,10 +84,12 @@ stringstream
 ![image](https://github.com/user-attachments/assets/0592adb2-99e9-4794-b99b-8cf3b89a6d86)
 - 헤더 끝 부분 뒤에 "\r\n\r\n"로 body 부분과 분리
 - Content-Length만큼 body를 읽음
+
 ![image](https://github.com/user-attachments/assets/9e6711e0-ed25-41b5-9542-4f834e842576)
 
 - 박상훈과 나이를 전송하니 보내진 것을 확인
 - 다만, 아래처럼 데이터가 인코딩 되어 보인다. 디코딩도 해봐야한다.
+
 ![image](https://github.com/user-attachments/assets/e079d111-e3fc-451b-bb5b-832aa9599631)
 
 
