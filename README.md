@@ -1,3 +1,9 @@
+# 목차
+1. 웹브라우저 띄우기
+2. 다중 요청 처리 + 루프(다회용)
+3. 멀티스레딩
+4. 정적 파일 응답
+    ↳ 4-1. 쿼리 분리 및 POST 처리
 ### C++로 웹서버 구현하기
 - VSCode
 - C++17
@@ -14,6 +20,7 @@ make
 ![image](https://github.com/user-attachments/assets/4aac2eaf-a39e-4871-bc91-84aed8bde3ae)
 ![image](https://github.com/user-attachments/assets/86528396-70b7-4da1-8f0c-94c0802af4dc)
 
+
 ## 2. 다중 요청 처리 + 루프
 - 흐름
 ```
@@ -25,6 +32,7 @@ while(1) {
 }
 ```
 - 단순히 accept부터 close(new_socket)까지 루프문으로 구현
+
 
 ## 3. 멀티스레딩
 - 현 시점 문제점: 루프문에서 클라이언트의 요청을 처리하고 대기하는 도중에 다른 클라이언트가 요청하면 서버가 처리할 수 없음
@@ -40,6 +48,7 @@ while(1) {
        ↳ 서버는 다시 accept()로 돌아가 다른 요청 기다림
 ```
 ![image](https://github.com/user-attachments/assets/ed490d06-5999-4e6b-b488-39ed8a0fa612)
+
 
 ## 4. 정적 파일 응답
 - 여기서부터 서치가 어려워서 힘들었다. 다행히 대학 시절 파일 입출력 스트림을 다룬 파트를 참고했다.
@@ -62,7 +71,7 @@ stringstream
 ![image](https://github.com/user-attachments/assets/fca7b160-8d68-449b-a409-a17b82da5f1e)
 ![image](https://github.com/user-attachments/assets/73d7dd1b-b810-48b8-abf7-599b37435b4c)
 
-### 요청의 쿼리 분리, 파싱
+#### 요청의 쿼리 분리, 파싱
 1. "?"문자 뒤의 쿼리(키-값)를 분리
 2. map함수로 키-값 쌍을 매핑
 
@@ -71,7 +80,7 @@ stringstream
 
 > 경고 처리 및 Makefile로 관리
 
-### POST 요청 처리
+#### POST 요청 처리
 ![image](https://github.com/user-attachments/assets/0592adb2-99e9-4794-b99b-8cf3b89a6d86)
 - 헤더 끝 부분 뒤에 "\r\n\r\n"로 body 부분과 분리
 - Content-Length만큼 body를 읽음
