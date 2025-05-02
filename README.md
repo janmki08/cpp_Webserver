@@ -121,7 +121,7 @@ stringstream
 - 운영체제(이형봉 저)
 - 시스템 프로그래밍(이형봉 저)
 - 아장아장 C언어(이형봉 저)
-- https://velog.io/@rookieand/MIME-type%EC%9D%80-%EB%AD%90%EA%B3%A0-Content-type%EC%9D%80-%EB%AD%94%EB%8D%B0 --> MIME 타입
+- https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/MIME_types --> MIME 타입
 - https://recipes4dev.tistory.com/153 --> 소켓 프로그래밍 이론
 - https://www.it-note.kr/122 --> setsockopt 함수
 - https://gdngy.tistory.com/186 , https://engineerer.tistory.com/126 --> 소켓 구현 참고
