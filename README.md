@@ -13,7 +13,7 @@
 빌드 및 실행
 cd cpp_webserver
 make
-./server
+./build/server
 ```
 ---
 ## 1. 일회용 웹브라우저 띄우기
