@@ -3,7 +3,7 @@
 #include "response.h"
 #include "getfile.h"
 #include "decode.h"
-
+#include "mime.h"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -52,7 +52,8 @@ void handle_client(int csocket)
     string response;
     if (!content.empty())
     {
-        response = html_response(content);
+        string mime = get_mime(file_path);
+        response = html_response(content, mime);
     }
     else
     {
