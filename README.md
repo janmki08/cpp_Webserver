@@ -122,11 +122,17 @@ stringstream
 3번: 특정 경로 접근 제한
 6번: 로그 함수 구현
 
+테스트 결과
+![image](https://github.com/user-attachments/assets/5024b0e4-73b1-4307-b693-41f4344b1727)
+![image](https://github.com/user-attachments/assets/1263fd2f-5a7f-4d21-bb79-44ad9a9d0b2a)
+static 외 접근은 로그도 남지 않음
+
 ## TODO
 1. ~~현재 요청(request)를 공백 문자로만 구분해서 파싱함 -> 쿼리도 있고 잘못된 요청이 왔을 때 구분 못하기 때문~~
 2. ~~POST 요청 처리 추가~~
 3. ~~MIME 타입 응답 수정 -> 현재는 단순해서 부정확한 정보를 담고 있고 확장자를 매핑해서 기능 확장 필요~~
-4. 보안(디렉토리 트레버설) -> static 이외 폴더 접근 막기
+4. ~~보안(디렉토리 트레버설) -> static 이외 폴더 접근 막기~~
+5. 클라이언트 IP까지 출력하는 것 고려..
  
 ---
 ## 참고 사이트 및 자료
