@@ -5,6 +5,7 @@
 #include "decode.h"
 #include "mime.h"
 #include "logger.h"
+#include "router.h"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -41,6 +42,10 @@ void handle_client(int csocket)
     if (path == "/")
         path = "/index.html";
 
+    // 파일 경로 생성 및 경로 검사(static 외 차단)
+    string file_path = "./static" + path;
+    char resolved_path[PATH_MAX];
+
     // ../ 경로 차단
     if (path.find("..") != string::npos)
     {
@@ -50,9 +55,6 @@ void handle_client(int csocket)
         return;
     }
 
-    // 파일 경로 생성 및 경로 검사(static 외 차단)
-    string file_path = "./static" + path;
-    char resolved_path[PATH_MAX];
     if (realpath(file_path.c_str(), resolved_path) == nullptr)
     {
         response = NOT_FOUND_response();
@@ -70,7 +72,16 @@ void handle_client(int csocket)
     }
 
     // 내용 가져오기
-    string content = get_file(file_path);
+    string content;
+
+    if (has_route(path))
+    {
+        content = handle_route(path);
+    }
+    else
+    {
+        content = get_file(file_path);
+    }
 
     // POST 응답 테스트 용
     if (path == "/post.html" && method == "POST")

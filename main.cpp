@@ -3,10 +3,22 @@
 #include <netinet/in.h>
 #include <thread>
 #include "handler.h"
+#include "router.h"
 
 #define PORT 8080
 
 using namespace std;
+
+string hello_html()
+{
+    return "<html><body><h1>Hello from /hello</h1></body></html>";
+}
+
+string time_html()
+{
+    time_t now = time(nullptr);
+    return "<html><body><h1>현재 시간: " + string(ctime(&now)) + "</h1></body></html>";
+}
 
 int main()
 {
@@ -14,6 +26,10 @@ int main()
     int new_socket;
     struct sockaddr_in address;
     int addrlen = sizeof(address);
+
+    // 라우터
+    register_route("/hello", hello_html);
+    register_route("/time", time_html);
 
     // 소켓 생성
     server_fd = socket(AF_INET, SOCK_STREAM, 0); // IPv4, TCP(UDP는 SOCK_DGRAM), 기본 프로토콜
