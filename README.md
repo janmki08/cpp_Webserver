@@ -124,12 +124,15 @@ stringstream
 6번: 로그 함수 구현
 
 테스트 결과
+
 ![image](https://github.com/user-attachments/assets/5024b0e4-73b1-4307-b693-41f4344b1727)
+
 ![image](https://github.com/user-attachments/assets/1263fd2f-5a7f-4d21-bb79-44ad9a9d0b2a)
 
 static 외 접근은 로그도 남지 않음
 
 브라우저 자체에서 ../ 을 허용하지 않기에 다른 방법으로 시도
+
 curl 명령어로 시도하자 404 에러(정상 작동)
 
 ## 7. 라우팅 시스템 구현
