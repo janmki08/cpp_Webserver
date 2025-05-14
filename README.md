@@ -141,6 +141,11 @@ curl 명령어로 시도하자 404 에러(정상 작동)
     4. 없으면 static 파일 경로로 처리
 
  - 문제: /hello로 접근해도 없는 페이지로 뜸...
+> static 페이지로 넘어가는 것이였음 -> 조건문으로 동적인지 정적인지 구분하여 접속
+> mime 타입 설정 때문에 application/octet-stream로 인식하여 파일을 다운로드 해버림 -> text/html로 처리하게 강제함(임시)
+
+![image](https://github.com/user-attachments/assets/2b45c613-9c9d-4770-b5cd-ca7e3f333e5d)
+예시로 현재시각을 띄워봄
 
 ## TODO
 1. ~~현재 요청(request)를 공백 문자로만 구분해서 파싱함 -> 쿼리도 있고 잘못된 요청이 왔을 때 구분 못하기 때문~~
