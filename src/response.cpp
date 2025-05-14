@@ -3,7 +3,7 @@
 // 정상 응답
 string html_response(const string &body, const string &content_type)
 {
-    return "HTTP/1.1 200 OK\r\nContent-Type: " + content_type + "\r\nContent-Length: " + to_string(body.size()) + "\r\n\r\n" + body;
+    return "HTTP/1.1 200 OK\r\nContent-Type: " + content_type + "; charset=UTF-8\r\nContent-Length: " + to_string(body.size()) + "\r\n\r\n" + body;
 }
 
 // 404 응답

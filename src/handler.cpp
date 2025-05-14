@@ -42,39 +42,44 @@ void handle_client(int csocket)
     if (path == "/")
         path = "/index.html";
 
+    bool is_route = has_route(path);
+
     // 파일 경로 생성 및 경로 검사(static 외 차단)
     string file_path = "./static" + path;
     char resolved_path[PATH_MAX];
 
-    // ../ 경로 차단
-    if (path.find("..") != string::npos)
+    if (!is_route)
     {
-        response = NOT_FOUND_response();
-        send(csocket, response.c_str(), response.length(), 0);
-        close(csocket);
-        return;
-    }
+        // ../ 경로 차단
+        if (path.find("..") != string::npos)
+        {
+            response = NOT_FOUND_response();
+            send(csocket, response.c_str(), response.length(), 0);
+            close(csocket);
+            return;
+        }
 
-    if (realpath(file_path.c_str(), resolved_path) == nullptr)
-    {
-        response = NOT_FOUND_response();
-        send(csocket, response.c_str(), response.length(), 0);
-        close(csocket);
-        return;
-    }
-    string real_path_str(resolved_path);
-    if (real_path_str.find("/static/") == std::string::npos)
-    {
-        response = NOT_FOUND_response();
-        send(csocket, response.c_str(), response.length(), 0);
-        close(csocket);
-        return;
+        if (realpath(file_path.c_str(), resolved_path) == nullptr)
+        {
+            response = NOT_FOUND_response();
+            send(csocket, response.c_str(), response.length(), 0);
+            close(csocket);
+            return;
+        }
+        string real_path_str(resolved_path);
+        if (real_path_str.find("/static/") == std::string::npos)
+        {
+            response = NOT_FOUND_response();
+            send(csocket, response.c_str(), response.length(), 0);
+            close(csocket);
+            return;
+        }
     }
 
     // 내용 가져오기
     string content;
 
-    if (has_route(path))
+    if (is_route)
     {
         content = handle_route(path);
     }
@@ -92,7 +97,15 @@ void handle_client(int csocket)
     // 응답
     if (!content.empty())
     {
-        string mime = get_mime(file_path);
+        string mime;
+        if (is_route)
+        {
+            mime = "text/html";
+        }
+        else
+        {
+            mime = get_mime(file_path);
+        }
         response = html_response(content, mime);
     }
     else

@@ -11,13 +11,13 @@ using namespace std;
 
 string hello_html()
 {
-    return "<html><body><h1>Hello from /hello</h1></body></html>";
+    return "<!DOCTYPE html><html><body><h1>Hello from /hello</h1></body></html>";
 }
 
 string time_html()
 {
     time_t now = time(nullptr);
-    return "<html><body><h1>현재 시간: " + string(ctime(&now)) + "</h1></body></html>";
+    return "<!DOCTYPE html><html><body><h1>현재 시간: " + string(ctime(&now)) + "</h1></body></html>";
 }
 
 int main()
@@ -27,7 +27,7 @@ int main()
     struct sockaddr_in address;
     int addrlen = sizeof(address);
 
-    // 라우터
+    // 라우터 테스트
     register_route("/hello", hello_html);
     register_route("/time", time_html);
 
